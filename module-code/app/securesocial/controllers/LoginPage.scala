@@ -22,13 +22,14 @@ import play.api.Play
 import Play.current
 import providers.UsernamePasswordProvider
 import scala.concurrent.{ ExecutionContext, Future }
+import com.google.inject._
 
 /**
  * A default Login controller that uses BasicProfile as the user type.
  *
  * @param env An environment
  */
-class LoginPage(override implicit val env: RuntimeEnvironment[BasicProfile]) extends BaseLoginPage[BasicProfile]
+class LoginPage @Inject() (override implicit val env: RuntimeEnvironment[BasicProfile]) extends BaseLoginPage[BasicProfile]
 
 /**
  * The trait that defines the login page controller

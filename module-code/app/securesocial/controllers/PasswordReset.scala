@@ -24,6 +24,7 @@ import securesocial.core._
 import securesocial.core.providers.UsernamePasswordProvider
 import securesocial.core.providers.utils.PasswordValidator
 import securesocial.core.services.SaveMode
+import com.google.inject._
 
 import scala.concurrent.Future
 
@@ -32,7 +33,7 @@ import scala.concurrent.Future
  *
  * @param env an environment
  */
-class PasswordReset(override implicit val env: RuntimeEnvironment[BasicProfile]) extends BasePasswordReset[BasicProfile]
+class PasswordReset @Inject() (override implicit val env: RuntimeEnvironment[BasicProfile]) extends BasePasswordReset[BasicProfile]
 
 /**
  * The trait that provides the Password Reset functionality

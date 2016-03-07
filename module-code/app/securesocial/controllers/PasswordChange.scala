@@ -16,22 +16,23 @@
  */
 package securesocial.controllers
 
-import securesocial.core._
-import play.api.mvc.SimpleResult
+import com.google.inject._
 import play.api.Play
 import play.api.data.Form
 import play.api.data.Forms._
-import securesocial.core.providers.utils.PasswordValidator
 import play.api.i18n.Messages
-import scala.Some
-import scala.concurrent.{ Await, ExecutionContext, Future }
+import play.api.mvc.SimpleResult
+import securesocial.core._
+import securesocial.core.providers.utils.PasswordValidator
+
+import scala.concurrent.{ Await, Future }
 
 /**
  * A default PasswordChange controller that uses the BasicProfile as the user type
  *
  * @param env An environment
  */
-class PasswordChange(override implicit val env: RuntimeEnvironment[BasicProfile]) extends BasePasswordChange[BasicProfile]
+class PasswordChange @Inject() (override implicit val env: RuntimeEnvironment[BasicProfile]) extends BasePasswordChange[BasicProfile]
 
 /**
  * A trait that defines the password change functionality
@@ -66,7 +67,7 @@ trait BasePasswordChange[U] extends SecureSocial[U] {
    * @return a future boolean
    */
   def checkCurrentPassword[A](suppliedPassword: String)(implicit request: SecuredRequest[A]): Future[Boolean] = {
-    import ExecutionContext.Implicits.global
+    import scala.concurrent.ExecutionContext.Implicits.global
     env.userService.passwordInfoFor(request.user).map {
       case Some(info) =>
         env.passwordHashers.get(info.hasher).exists {
@@ -77,7 +78,7 @@ trait BasePasswordChange[U] extends SecureSocial[U] {
   }
 
   private def execute[A](f: Form[ChangeInfo] => Future[SimpleResult])(implicit request: SecuredRequest[A]): Future[SimpleResult] = {
-    import ExecutionContext.Implicits.global
+    import scala.concurrent.ExecutionContext.Implicits.global
     val form = Form[ChangeInfo](
       mapping(
         CurrentPassword ->
@@ -126,7 +127,7 @@ trait BasePasswordChange[U] extends SecureSocial[U] {
         errors => Future.successful(BadRequest(env.viewTemplates.getPasswordChangePage(errors))),
         info => {
           val newPasswordInfo = env.currentHasher.hash(info.newPassword)
-          import ExecutionContext.Implicits.global
+          import scala.concurrent.ExecutionContext.Implicits.global
           implicit val userLang = request2lang(request)
           env.userService.updatePasswordInfo(request.user, newPasswordInfo).map {
             case Some(u) =>

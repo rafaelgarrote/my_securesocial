@@ -2,7 +2,9 @@ name := "SecureSocial"
 
 version := Common.version
 
-scalaVersion := Common.scalaVersion
+//scalaVersion := Common.scalaVersion
+
+scalaVersion := "2.10.4"
 
 libraryDependencies ++= Seq(
   cache,
@@ -11,7 +13,8 @@ libraryDependencies ++= Seq(
   "com.typesafe.play.plugins" %% "play-plugins-mailer" % "2.3.0",
   "org.mindrot" % "jbcrypt" % "0.3m",
   "org.specs2" %% "specs2" % "2.3.12" % "test",
-  "org.mockito" % "mockito-all" % "1.9.5" % "test"
+  "org.mockito" % "mockito-all" % "1.9.5" % "test",
+  "com.google.inject" % "guice" % "3.0"
 )
 
 scalariformSettings
@@ -29,6 +32,8 @@ organizationHomepage := Some(new URL("http://www.securesocial.ws"))
 publishMavenStyle := true
 
 publishArtifact in Test := false
+
+exportJars := true
 
 pomIncludeRepository := { _ => false }
 

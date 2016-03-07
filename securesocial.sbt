@@ -2,7 +2,8 @@ name := "SecureSocial-parent"
 
 version := Common.version
 
-scalaVersion := Common.scalaVersion
+//scalaVersion := Common.scalaVersion
+scalaVersion := "2.10.4"
 
 lazy val core =  project.in( file("module-code") ).enablePlugins(PlayScala)
 

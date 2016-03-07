@@ -16,6 +16,7 @@
  */
 package securesocial.controllers
 
+import com.google.inject._
 import play.api.data.Forms._
 import play.api.data._
 import play.api.i18n.Messages
@@ -26,14 +27,14 @@ import securesocial.core.providers.UsernamePasswordProvider
 import securesocial.core.providers.utils._
 import securesocial.core.services.SaveMode
 
-import scala.concurrent.{ Await, ExecutionContext, Future }
+import scala.concurrent.{ Await, Future }
 
 /**
  * A default Registration controller that uses the BasicProfile as the user type
  *
  * @param env the environment
  */
-class Registration(override implicit val env: RuntimeEnvironment[BasicProfile]) extends BaseRegistration[BasicProfile]
+class Registration @Inject() (override implicit val env: RuntimeEnvironment[BasicProfile]) extends BaseRegistration[BasicProfile]
 
 /**
  * A trait that provides the means to handle user registration

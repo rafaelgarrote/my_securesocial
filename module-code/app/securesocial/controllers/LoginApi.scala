@@ -25,11 +25,12 @@ import securesocial.core.AuthenticationResult.Authenticated
 import securesocial.core.LoginEvent
 import securesocial.core.BasicProfile
 import securesocial.core.services.SaveMode
+import com.google.inject._
 
 /**
  * A default controller that uses the BasicProfile as the application user type.
  */
-class LoginApi(override implicit val env: RuntimeEnvironment[BasicProfile]) extends BaseLoginApi[BasicProfile]
+class LoginApi @Inject() (override implicit val env: RuntimeEnvironment[BasicProfile]) extends BaseLoginApi[BasicProfile]
 
 /**
  * This trait provides the means to provide an authentication API that can be used by client side or mobile apps.

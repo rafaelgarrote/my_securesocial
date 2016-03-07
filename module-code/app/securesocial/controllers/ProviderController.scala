@@ -24,13 +24,14 @@ import securesocial.core._
 import securesocial.core.authenticator.CookieAuthenticator
 import securesocial.core.services.SaveMode
 import securesocial.core.utils._
+import com.google.inject._
 
 import scala.concurrent.Future
 
 /**
  * A default controller that uses the BasicProfile as the user type
  */
-class ProviderController(override implicit val env: RuntimeEnvironment[BasicProfile])
+class ProviderController @Inject() (override implicit val env: RuntimeEnvironment[BasicProfile])
   extends BaseProviderController[BasicProfile]
 
 /**
@@ -184,5 +185,6 @@ object ProviderControllerHelper {
    * @param session
    * @return
    */
+
   def toUrl(session: Session) = session.get(SecureSocial.OriginalUrlKey).getOrElse(ProviderControllerHelper.landingUrl)
 }

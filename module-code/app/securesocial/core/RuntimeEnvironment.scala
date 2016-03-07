@@ -70,7 +70,7 @@ object RuntimeEnvironment {
     protected def oauth1ClientFor(provider: String) = new OAuth1Client.Default(ServiceInfoHelper.forProvider(provider), httpService)
     protected def oauth2ClientFor(provider: String) = new OAuth2Client.Default(httpService, OAuth2Settings.forProvider(provider))
 
-    override lazy val providers = ListMap(
+    override lazy val providers: ListMap[String, IdentityProvider] = ListMap(
       // oauth 2 client providers
       include(new FacebookProvider(routes, cacheService, oauth2ClientFor(FacebookProvider.Facebook))),
       include(new FoursquareProvider(routes, cacheService, oauth2ClientFor(FoursquareProvider.Foursquare))),
